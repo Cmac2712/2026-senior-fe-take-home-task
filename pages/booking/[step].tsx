@@ -20,10 +20,10 @@ export const getServerSideProps: GetServerSideProps<BookingPageProps> = async (
     VALID_STEPS.indexOf(step as (typeof VALID_STEPS)[number]) + 1;
 
   const trip = {
-    destination: "Patagonia, Chile",
+    destination: "Loch Lomond, Scotland",
     departureDate: "2026-06-15",
     returnDate: "2026-06-28",
-    summary: "A 14-day guided trek through Torres del Paine with local hosts.",
+    summary: "A 3 day trip around the bonnie banks of Scotland's greatest loch",
   };
 
   const defaults = {
@@ -71,10 +71,7 @@ export default function BookingStepPage({
           <h2 className="text-lg font-semibold text-gray-900 mb-2">
             Step 1: Select your trip
           </h2>
-          <p className="text-gray-500">
-            Trip selection is coming soon. For now, proceed to the next step to
-            enter your traveller details.
-          </p>
+          <p className="text-gray-500">Trip selection is coming soon.</p>
           <div className="mt-6 flex justify-end">
             <button
               type="button"
