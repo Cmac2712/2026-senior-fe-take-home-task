@@ -1,7 +1,8 @@
 import type { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
-import TravellerForm from "@/components/TravellerForm";
+import { BookingLayout } from "@/components/BookingLayout";
+import { TravellerForm } from "@/components/TravellerForm";
 import type { BookingPageProps, TravellerFormData } from "@/lib/types";
 
 const VALID_STEPS = ["step-1", "step-2", "step-3"] as const;
@@ -22,8 +23,7 @@ export const getServerSideProps: GetServerSideProps<BookingPageProps> = async (
     destination: "Patagonia, Chile",
     departureDate: "2026-06-15",
     returnDate: "2026-06-28",
-    summary:
-      "A 14-day guided trek through Torres del Paine with local hosts.",
+    summary: "A 14-day guided trek through Torres del Paine with local hosts.",
   };
 
   const defaults = {
@@ -52,10 +52,20 @@ export default function BookingStepPage({
     [router],
   );
 
-  return (
-    <main>
-      <h1>Book your trip</h1>
+  const handleBack = useCallback(() => {
+    if (currentStep > 1) {
+      router.push(`/booking/step-${currentStep - 1}`);
+    }
+  }, [currentStep, router]);
 
+  const handleNext = useCallback(() => {
+    if (currentStep < 3) {
+      router.push(`/booking/step-${currentStep + 1}`);
+    }
+  }, [currentStep, router]);
+
+  return (
+    <BookingLayout currentStep={currentStep}>
       {currentStep === 1 && (
         <div>
           <h2>Step 1: Select your trip</h2>
@@ -63,6 +73,11 @@ export default function BookingStepPage({
             Trip selection is coming soon. For now, proceed to the next step to
             enter your traveller details.
           </p>
+          <div>
+            <button type="button" onClick={handleNext}>
+              Next step
+            </button>
+          </div>
         </div>
       )}
 
@@ -92,6 +107,14 @@ export default function BookingStepPage({
           </p>
         </div>
       )}
-    </main>
+
+      {currentStep > 1 && !isSubmitted && (
+        <div>
+          <button type="button" onClick={handleBack}>
+            &larr; Back
+          </button>
+        </div>
+      )}
+    </BookingLayout>
   );
 }

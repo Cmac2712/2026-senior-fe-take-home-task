@@ -13,7 +13,7 @@ interface FormFieldProps {
   }) => React.ReactNode;
 }
 
-export default function FormField({
+export function FormField({
   label,
   name,
   error,

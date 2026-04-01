@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import FormField from "./FormField";
+import { FormField } from "./FormField";
 import { validateTravellerForm } from "@/lib/validation";
 import type {
   BookingDefaults,
@@ -24,7 +24,7 @@ const INITIAL_FORM_DATA: TravellerFormData = {
 };
 
 
-export default function TravellerForm({
+export function TravellerForm({
   trip,
   defaults,
   onSubmit,
