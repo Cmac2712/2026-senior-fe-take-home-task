@@ -67,14 +67,20 @@ export default function BookingStepPage({
   return (
     <BookingLayout currentStep={currentStep}>
       {currentStep === 1 && (
-        <div>
-          <h2>Step 1: Select your trip</h2>
-          <p>
+        <div className="rounded-lg bg-white p-6 shadow-sm border border-gray-200">
+          <h2 className="text-lg font-semibold text-gray-900 mb-2">
+            Step 1: Select your trip
+          </h2>
+          <p className="text-gray-500">
             Trip selection is coming soon. For now, proceed to the next step to
             enter your traveller details.
           </p>
-          <div>
-            <button type="button" onClick={handleNext}>
+          <div className="mt-6 flex justify-end">
+            <button
+              type="button"
+              onClick={handleNext}
+              className="inline-flex items-center rounded-md bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 min-h-[44px] cursor-pointer"
+            >
               Next step
             </button>
           </div>
@@ -82,11 +88,15 @@ export default function BookingStepPage({
       )}
 
       {currentStep === 2 && (
-        <div>
+        <div className="rounded-lg bg-white p-6 shadow-sm border border-gray-200">
           {isSubmitted ? (
-            <div>
-              <p>Details submitted successfully!</p>
-              <p>Redirecting to payment&hellip;</p>
+            <div className="text-center py-8">
+              <p className="text-lg font-semibold text-green-700">
+                Details submitted successfully!
+              </p>
+              <p className="text-sm text-gray-500 mt-1">
+                Redirecting to payment&hellip;
+              </p>
             </div>
           ) : (
             <TravellerForm
@@ -99,9 +109,11 @@ export default function BookingStepPage({
       )}
 
       {currentStep === 3 && (
-        <div>
-          <h2>Step 3: Payment</h2>
-          <p>
+        <div className="rounded-lg bg-white p-6 shadow-sm border border-gray-200">
+          <h2 className="text-lg font-semibold text-gray-900 mb-2">
+            Step 3: Payment
+          </h2>
+          <p className="text-gray-500">
             Payment processing is coming soon. Thank you for entering your
             traveller details.
           </p>
@@ -109,8 +121,12 @@ export default function BookingStepPage({
       )}
 
       {currentStep > 1 && !isSubmitted && (
-        <div>
-          <button type="button" onClick={handleBack}>
+        <div className="mt-4">
+          <button
+            type="button"
+            onClick={handleBack}
+            className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 min-h-[44px] cursor-pointer"
+          >
             &larr; Back
           </button>
         </div>

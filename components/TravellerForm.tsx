@@ -84,58 +84,73 @@ export function TravellerForm({
       year: "numeric",
     });
 
+  const inputClasses = (hasError: boolean) =>
+    `block w-full rounded-md border px-3 py-2 text-gray-900 shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 ${
+      hasError
+        ? "border-red-500 focus-visible:ring-red-500"
+        : "border-gray-300 focus-visible:ring-blue-500"
+    }`;
+
   return (
     <div>
-      <div>
-        <h2>{trip.destination}</h2>
-        <p>
+      <div className="mb-6 rounded-lg bg-blue-50 border border-blue-200 p-4">
+        <h2 className="text-lg font-semibold text-blue-900">
+          {trip.destination}
+        </h2>
+        <p className="text-sm text-blue-700 mt-1">
           {formatDate(trip.departureDate)} &ndash;{" "}
           {formatDate(trip.returnDate)}
         </p>
-        <p>{trip.summary}</p>
+        <p className="text-sm text-blue-800 mt-1">{trip.summary}</p>
       </div>
 
       <form onSubmit={handleSubmit} noValidate>
-        <fieldset>
-          <legend>Traveller details</legend>
+        <fieldset className="border-none p-0 m-0">
+          <legend className="text-xl font-semibold text-gray-900 mb-4">
+            Traveller details
+          </legend>
 
-          <FormField
-            label="First name"
-            name="firstName"
-            error={errors.firstName}
-            required
-          >
-            {(ariaProps) => (
-              <input
-                {...ariaProps}
-                type="text"
-                name="firstName"
-                value={formData.firstName}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                autoComplete="given-name"
-              />
-            )}
-          </FormField>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4">
+            <FormField
+              label="First name"
+              name="firstName"
+              error={errors.firstName}
+              required
+            >
+              {(ariaProps) => (
+                <input
+                  {...ariaProps}
+                  type="text"
+                  name="firstName"
+                  value={formData.firstName}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  autoComplete="given-name"
+                  className={inputClasses(!!errors.firstName)}
+                />
+              )}
+            </FormField>
 
-          <FormField
-            label="Last name"
-            name="lastName"
-            error={errors.lastName}
-            required
-          >
-            {(ariaProps) => (
-              <input
-                {...ariaProps}
-                type="text"
-                name="lastName"
-                value={formData.lastName}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                autoComplete="family-name"
-              />
-            )}
-          </FormField>
+            <FormField
+              label="Last name"
+              name="lastName"
+              error={errors.lastName}
+              required
+            >
+              {(ariaProps) => (
+                <input
+                  {...ariaProps}
+                  type="text"
+                  name="lastName"
+                  value={formData.lastName}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  autoComplete="family-name"
+                  className={inputClasses(!!errors.lastName)}
+                />
+              )}
+            </FormField>
+          </div>
 
           <FormField
             label="Email"
@@ -152,53 +167,55 @@ export function TravellerForm({
                 onChange={handleChange}
                 onBlur={handleBlur}
                 autoComplete="email"
+                className={inputClasses(!!errors.email)}
               />
             )}
           </FormField>
 
-          <FormField
-            label="Number of travellers"
-            name="numberOfTravellers"
-            error={errors.numberOfTravellers}
-            required
-          >
-            {(ariaProps) => (
-              <input
-                {...ariaProps}
-                type="number"
-                name="numberOfTravellers"
-                min="1"
-                max="20"
-                value={formData.numberOfTravellers}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-            )}
-          </FormField>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4">
+            <FormField
+              label="Number of travellers"
+              name="numberOfTravellers"
+              error={errors.numberOfTravellers}
+              required
+            >
+              {(ariaProps) => (
+                <input
+                  {...ariaProps}
+                  type="number"
+                  name="numberOfTravellers"
+                  min="1"
+                  max="20"
+                  value={formData.numberOfTravellers}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  className={inputClasses(!!errors.numberOfTravellers)}
+                />
+              )}
+            </FormField>
 
-          <FormField
-            label="Phone number"
-            name="phoneNumber"
-            error={errors.phoneNumber}
-          >
-            {(ariaProps) => (
-              <input
-                {...ariaProps}
-                type="tel"
-                name="phoneNumber"
-                value={formData.phoneNumber}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                autoComplete="tel"
-                placeholder="+44 20 7946 0958"
-              />
-            )}
-          </FormField>
+            <FormField
+              label="Phone number"
+              name="phoneNumber"
+              error={errors.phoneNumber}
+            >
+              {(ariaProps) => (
+                <input
+                  {...ariaProps}
+                  type="tel"
+                  name="phoneNumber"
+                  value={formData.phoneNumber}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  autoComplete="tel"
+                  placeholder="+44 20 7946 0958"
+                  className={inputClasses(!!errors.phoneNumber)}
+                />
+              )}
+            </FormField>
+          </div>
 
-          <FormField
-            label="Special requests"
-            name="specialRequests"
-          >
+          <FormField label="Special requests" name="specialRequests">
             {(ariaProps) => (
               <textarea
                 {...ariaProps}
@@ -208,12 +225,20 @@ export function TravellerForm({
                 onBlur={handleBlur}
                 rows={3}
                 placeholder="Dietary requirements, accessibility needs, etc."
+                className={inputClasses(false)}
               />
             )}
           </FormField>
         </fieldset>
 
-        <button type="submit">Next step</button>
+        <div className="mt-6 flex justify-end">
+          <button
+            type="submit"
+            className="inline-flex items-center rounded-md bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 min-h-[44px] cursor-pointer"
+          >
+            Next step
+          </button>
+        </div>
       </form>
     </div>
   );

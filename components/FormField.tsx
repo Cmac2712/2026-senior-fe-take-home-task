@@ -24,12 +24,17 @@ export function FormField({
   const errorId = `${id}-error`;
 
   return (
-    <div>
-      <label htmlFor={id}>
+    <div className="mb-5">
+      <label
+        htmlFor={id}
+        className="block text-sm font-medium text-gray-700 mb-1"
+      >
         {label}
         {required && (
           <>
-            <span aria-hidden="true">*</span>
+            <span aria-hidden="true" className="text-red-600 ml-0.5">
+              *
+            </span>
             <span className="sr-only"> (required)</span>
           </>
         )}
@@ -40,7 +45,7 @@ export function FormField({
         ...(required ? { "aria-required": true } : {}),
       })}
       {error && (
-        <p id={errorId} role="alert">
+        <p id={errorId} role="alert" className="mt-1 text-sm text-red-600">
           {error}
         </p>
       )}
