@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from "react";
+import { usePersistedState } from "@/lib/hooks";
 import {
   TextInput,
   EmailInput,
@@ -35,10 +36,14 @@ export function TravellerForm({
   defaults,
   onSubmit,
 }: TravellerFormProps) {
-  const [formData, setFormData] = useState<TravellerFormData>({
-    ...INITIAL_FORM_DATA,
-    numberOfTravellers: String(defaults.numberOfTravellers),
-  });
+  const STORAGE_KEY = "booking-traveller-form";
+  const [formData, setFormData] = usePersistedState<TravellerFormData>(
+    STORAGE_KEY,
+    {
+      ...INITIAL_FORM_DATA,
+      numberOfTravellers: String(defaults.numberOfTravellers),
+    },
+  );
   const [errors, setErrors] = useState<FormErrors>({});
   const [hasSubmitted, setHasSubmitted] = useState(false);
 
@@ -52,7 +57,7 @@ export function TravellerForm({
         setErrors(validateTravellerForm(updated));
       }
     },
-    [formData, hasSubmitted],
+    [formData, hasSubmitted, setFormData],
   );
 
   const handleBlur = useCallback(
@@ -80,9 +85,14 @@ export function TravellerForm({
         return;
       }
 
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch {
+        // Ignore
+      }
       onSubmit(formData);
     },
-    [formData, onSubmit],
+    [formData, onSubmit, STORAGE_KEY],
   );
 
   return (

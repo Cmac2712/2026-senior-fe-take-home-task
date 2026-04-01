@@ -26,6 +26,10 @@ function renderForm(onSubmit = jest.fn()) {
 }
 
 describe("TravellerForm", () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
   it("renders all fields with labels", () => {
     renderForm();
 
