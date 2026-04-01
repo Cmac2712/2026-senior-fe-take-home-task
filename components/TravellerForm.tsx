@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from "react";
 import FormField from "./FormField";
+import { validateTravellerForm } from "@/lib/validation";
 import type {
   BookingDefaults,
   FormErrors,
@@ -22,16 +23,6 @@ const INITIAL_FORM_DATA: TravellerFormData = {
   specialRequests: "",
 };
 
-function validate(data: TravellerFormData): FormErrors {
-  // Placeholder — will be replaced by lib/validation.ts in step 1.7
-  const errors: FormErrors = {};
-  if (!data.firstName.trim()) errors.firstName = "First name is required";
-  if (!data.lastName.trim()) errors.lastName = "Last name is required";
-  if (!data.email.trim()) errors.email = "Email is required";
-  if (!data.numberOfTravellers.trim())
-    errors.numberOfTravellers = "Number of travellers is required";
-  return errors;
-}
 
 export default function TravellerForm({
   trip,
@@ -52,7 +43,7 @@ export default function TravellerForm({
       setFormData(updated);
 
       if (hasSubmitted) {
-        setErrors(validate(updated));
+        setErrors(validateTravellerForm(updated));
       }
     },
     [formData, hasSubmitted],
@@ -62,7 +53,7 @@ export default function TravellerForm({
     (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       if (!hasSubmitted) return;
       const updated = { ...formData, [e.target.name]: e.target.value };
-      setErrors(validate(updated));
+      setErrors(validateTravellerForm(updated));
     },
     [formData, hasSubmitted],
   );
@@ -72,7 +63,7 @@ export default function TravellerForm({
       e.preventDefault();
       setHasSubmitted(true);
 
-      const newErrors = validate(formData);
+      const newErrors = validateTravellerForm(formData);
       setErrors(newErrors);
 
       if (Object.keys(newErrors).length > 0) {
