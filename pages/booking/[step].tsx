@@ -45,9 +45,7 @@ export default function BookingStepPage({
     (data: TravellerFormData) => {
       console.log("Booking form submitted:", data);
       setIsSubmitted(true);
-      setTimeout(() => {
-        router.push("/booking/step-3");
-      }, 1500);
+      router.push("/booking/step-3");
     },
     [router],
   );
@@ -86,22 +84,11 @@ export default function BookingStepPage({
 
       {currentStep === 2 && (
         <div className="rounded-lg bg-white p-6 shadow-sm border border-gray-200">
-          {isSubmitted ? (
-            <div className="text-center py-8">
-              <p className="text-lg font-semibold text-green-700">
-                Details submitted successfully!
-              </p>
-              <p className="text-sm text-gray-500 mt-1">
-                Redirecting to payment&hellip;
-              </p>
-            </div>
-          ) : (
-            <TravellerForm
-              trip={trip}
-              defaults={defaults}
-              onSubmit={handleFormSubmit}
-            />
-          )}
+          <TravellerForm
+            trip={trip}
+            defaults={defaults}
+            onSubmit={handleFormSubmit}
+          />
         </div>
       )}
 
@@ -117,7 +104,7 @@ export default function BookingStepPage({
         </div>
       )}
 
-      {currentStep > 1 && !isSubmitted && (
+      {currentStep > 1 && (
         <div className="mt-4">
           <button
             type="button"
