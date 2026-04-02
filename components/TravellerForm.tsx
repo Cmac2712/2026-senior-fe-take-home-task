@@ -155,6 +155,7 @@ export function TravellerForm({
               onChange={handleChange}
               onBlur={handleBlur}
               error={errors.numberOfTravellers}
+              required
             />
 
             <PhoneInput

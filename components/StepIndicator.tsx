@@ -1,4 +1,4 @@
-const STEP_LABELS = ["Select your trip", "Traveller details", "Payment"];
+const STEP_LABELS = ["Select your trip", "Traveller details", "Success"];
 
 interface StepIndicatorProps {
   currentStep: number;
@@ -20,8 +20,8 @@ export function StepIndicator({ currentStep }: StepIndicatorProps) {
                   isActive
                     ? "text-blue-600"
                     : isCompleted
-                      ? "text-green-600"
-                      : "text-gray-400"
+                      ? "text-green-800"
+                      : "text-gray-600"
                 }`}
                 {...(isActive ? { "aria-current": "step" as const } : {})}
               >

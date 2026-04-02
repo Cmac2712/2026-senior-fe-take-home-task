@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
 import { BookingLayout } from "@/components/BookingLayout";
 import { TravellerForm } from "@/components/TravellerForm";
+import Head from "next/head";
 import type { BookingPageProps, TravellerFormData } from "@/lib/types";
 
 const VALID_STEPS = ["step-1", "step-2", "step-3"] as const;
@@ -39,12 +40,10 @@ export default function BookingStepPage({
   currentStep,
 }: BookingPageProps) {
   const router = useRouter();
-  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleFormSubmit = useCallback(
     (data: TravellerFormData) => {
       console.log("Booking form submitted:", data);
-      setIsSubmitted(true);
       router.push("/booking/step-3");
     },
     [router],
@@ -63,58 +62,61 @@ export default function BookingStepPage({
   }, [currentStep, router]);
 
   return (
-    <BookingLayout currentStep={currentStep}>
-      {currentStep === 1 && (
-        <div className="rounded-lg bg-white p-6 shadow-sm border border-gray-200">
-          <h2 className="text-lg font-semibold text-gray-900 mb-2">
-            Step 1: Select your trip
-          </h2>
-          <p className="text-gray-500">Trip selection is coming soon.</p>
-          <div className="mt-6 flex justify-end">
+    <>
+      <Head>
+        <title>TravelLocal | Step {currentStep}</title>
+        <meta name="description" content="Book your trip with TravelLocal." />
+      </Head>
+      <BookingLayout currentStep={currentStep}>
+        {currentStep === 1 && (
+          <div className="rounded-lg bg-white p-6 shadow-sm border border-gray-200">
+            <h2 className="text-lg font-semibold text-gray-900 mb-2">
+              Step 1: Select your trip
+            </h2>
+            <p className="text-gray-500">Trip selection is coming soon.</p>
+            <div className="mt-6 flex justify-end">
+              <button
+                type="button"
+                onClick={handleNext}
+                className="inline-flex items-center rounded-md bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 min-h-[44px] cursor-pointer"
+              >
+                Next step
+              </button>
+            </div>
+          </div>
+        )}
+
+        {currentStep === 2 && (
+          <div className="rounded-lg bg-white p-6 shadow-sm border border-gray-200">
+            <TravellerForm
+              trip={trip}
+              defaults={defaults}
+              onSubmit={handleFormSubmit}
+            />
+          </div>
+        )}
+
+        {currentStep === 3 && (
+          <div className="rounded-lg bg-white p-6 shadow-sm border border-gray-200">
+            <h2 className="text-lg font-semibold text-gray-900 mb-2">
+              Submission Successful!
+            </h2>
+            <p className="text-gray-500">We&apos;ll be in touch soon.</p>
+          </div>
+        )}
+
+        {currentStep > 1 && (
+          <div className="mt-4">
             <button
               type="button"
-              onClick={handleNext}
-              className="inline-flex items-center rounded-md bg-blue-600 px-6 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 min-h-[44px] cursor-pointer"
+              onClick={handleBack}
+              className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 min-h-[44px] cursor-pointer"
             >
-              Next step
+              &larr; Back
             </button>
           </div>
-        </div>
-      )}
-
-      {currentStep === 2 && (
-        <div className="rounded-lg bg-white p-6 shadow-sm border border-gray-200">
-          <TravellerForm
-            trip={trip}
-            defaults={defaults}
-            onSubmit={handleFormSubmit}
-          />
-        </div>
-      )}
-
-      {currentStep === 3 && (
-        <div className="rounded-lg bg-white p-6 shadow-sm border border-gray-200">
-          <h2 className="text-lg font-semibold text-gray-900 mb-2">
-            Step 3: Payment
-          </h2>
-          <p className="text-gray-500">
-            Payment processing is coming soon. Thank you for entering your
-            traveller details.
-          </p>
-        </div>
-      )}
-
-      {currentStep > 1 && (
-        <div className="mt-4">
-          <button
-            type="button"
-            onClick={handleBack}
-            className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 min-h-[44px] cursor-pointer"
-          >
-            &larr; Back
-          </button>
-        </div>
-      )}
-    </BookingLayout>
+        )}
+      </BookingLayout>
+    </>
   );
 }

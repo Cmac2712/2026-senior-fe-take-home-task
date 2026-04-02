@@ -2,7 +2,7 @@ import type { FormErrors, TravellerFormData } from "./types";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_REGEX = /^\+?[0-9\s\-().]{7,20}$/;
-const MAX_TRAVELLERS = 20;
+const MAX_TRAVELLERS = 10;
 
 export function validateTravellerForm(data: TravellerFormData): FormErrors {
   const errors: FormErrors = {};
