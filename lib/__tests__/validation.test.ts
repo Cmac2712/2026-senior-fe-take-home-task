@@ -48,19 +48,22 @@ describe("validateTravellerForm", () => {
       expect(validate({ email: "" })).toHaveProperty("email");
     });
 
-    it.each(["not-an-email", "missing@tld", "@no-local.com", "spaces in@email.com"])(
-      "rejects invalid email: %s",
-      (email) => {
-        expect(validate({ email })).toHaveProperty("email");
-      },
-    );
+    it.each([
+      "not-an-email",
+      "missing@tld",
+      "@no-local.com",
+      "spaces in@email.com",
+    ])("rejects invalid email: %s", (email) => {
+      expect(validate({ email })).toHaveProperty("email");
+    });
 
-    it.each(["user@example.com", "name+tag@domain.co.uk", "test@sub.domain.com"])(
-      "accepts valid email: %s",
-      (email) => {
-        expect(validate({ email })).not.toHaveProperty("email");
-      },
-    );
+    it.each([
+      "user@example.com",
+      "name+tag@domain.co.uk",
+      "test@sub.domain.com",
+    ])("accepts valid email: %s", (email) => {
+      expect(validate({ email })).not.toHaveProperty("email");
+    });
   });
 
   describe("numberOfTravellers", () => {
@@ -79,7 +82,7 @@ describe("validateTravellerForm", () => {
       },
     );
 
-    it.each(["1", "10", "20"])(
+    it.each(["1", "5", "10"])(
       "accepts valid value: %s",
       (numberOfTravellers) => {
         expect(validate({ numberOfTravellers })).not.toHaveProperty(

@@ -74,8 +74,6 @@ export function TravellerForm({
       e.preventDefault();
       setHasSubmitted(true);
 
-      console.log("Traveller Details: ", formData);
-
       const newErrors = validateTravellerForm(formData);
       setErrors(newErrors);
 
