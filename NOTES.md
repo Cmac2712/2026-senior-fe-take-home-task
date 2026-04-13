@@ -34,6 +34,8 @@
 
 - Persist data to BE: Form data could be persisted to the backend as the user types. This would allow the user to revisit the booking session via a follow-up email. As well as track metrics around booking abandonment
 
+- More advanced input elements. The telephone input could have a dropdown to select the country code. The "Number of travellers" input could have "+/-" buttons for easier input on mobile
+
 - I would add linting for consistent styling
 
 - Pre-commit hooks: Add pre-commit hooks lint + type check
